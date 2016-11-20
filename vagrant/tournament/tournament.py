@@ -44,6 +44,7 @@ def countPlayers():
     """Returns the number of players currently registered."""
     conn = connect()
     c = conn.cursor()
+    # SQL statement to count the number of players
     count = "SELECT count(*) FROM Players"
     c.execute(count)
     result = c.fetchone()
@@ -63,7 +64,9 @@ def registerPlayer(name):
     """
     conn = connect()
     c = conn.cursor()
+    # SQL statement for adding player to table Players
     player = "INSERT INTO Players (name) VALUES(%s) RETURNING id"
+    # SQL statement for adding player to table Standings
     standing = "INSERT INTO Standings (player_id,name) VALUES (%s,%s)"
     c.execute(player, (name,))
     player_id = c.fetchone()[0]
@@ -87,6 +90,7 @@ def playerStandings():
     """
     conn = connect()
     c = conn.cursor()
+    # SQL statement to resturn standing
     standings = "SELECT * FROM Standings ORDER BY score DESC"
     c.execute(standings)
     result = c.fetchall()
@@ -103,13 +107,14 @@ def reportMatch(winner, loser):
     """
     win_point = 1
     lose_point = 0
-
+    # SQL statement to insert match results into Matches and add to table
     sql = "INSERT into Matches (winner_id, loser_id) VALUES (%s,%s)"
 
     conn = connect()
     c = conn.cursor()
     c.execute(sql, (winner, loser,))
 
+    # SQL statements to update table Standings
     win = """UPDATE Standings 
              SET score = score+%s, matches = matches+1 
              WHERE player_id = %s"""
@@ -138,6 +143,7 @@ def swissPairings():
         id2: the second player's unique id
         name2: the second player's name
     """
+    # SQL statement to rank players according to score(ie wins)
     sql = """SELECT player_id, name FROM Standings
                    ORDER BY score DESC"""
 
@@ -148,11 +154,10 @@ def swissPairings():
 
     # Extract all the fields into a list
     p = []
-    for item in top[::1]:
-        p.extend(item)
+    [p.extend(item) for item in top]
 
     # Group list items into tuples so pairs are group by rank
     pairs = [tuple(p[i:i+4]) for i in range(0, len(p), 4)]
-    
+
     conn.close()
     return pairs

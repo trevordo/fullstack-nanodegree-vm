@@ -13,11 +13,10 @@ Create the database and establish schema
 Tables - capital and plural
 fields - lowercase
 
-Tables (Players, Matches, Scores, )
-
+Tables (Players, Matches, Standings)
  */
 
-DROP DATABASE tournament;
+DROP DATABASE IF EXISTS tournament;
 
 
 CREATE DATABASE tournament;
@@ -39,7 +38,6 @@ CREATE TABLE Matches (
 );
 
 -- create Standings Table
-
 CREATE TABLE Standings ( 
         player_id INTEGER REFERENCES Players(id),
         name TEXT,
