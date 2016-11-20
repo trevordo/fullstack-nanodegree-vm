@@ -13,14 +13,43 @@ def connect():
 
 def deleteMatches():
     """Remove all the match records from the database."""
+    conn = connect()
+    c = conn.cursor()
+    # Clear Matches
+    matches = "DELETE FROM Matches"
+    c.execute(matches)
+    # Update Standings without clearing standings
+    standing = "UPDATE Standings SET score = 0, matches = 0"
+
+    c.execute(standing)
+    conn.commit()
+    conn.close()
 
 
 def deletePlayers():
     """Remove all the player records from the database."""
+    conn = connect()
+    c = conn.cursor()
+    # Clear Standings First
+    standings = "DELETE FROM Standings"
+    c.execute(standings)
+    # Clear Players 
+    players = "DELETE FROM Players"
+    c.execute(players)
+    conn.commit()
+    conn.close()
 
 
 def countPlayers():
     """Returns the number of players currently registered."""
+    conn = connect()
+    c = conn.cursor()
+    count = "SELECT count(*) FROM Players"
+    c.execute(count)
+    result = c.fetchone()
+    total = result [0]
+    conn.close()
+    return total
 
 
 def registerPlayer(name):
@@ -32,6 +61,15 @@ def registerPlayer(name):
     Args:
       name: the player's full name (need not be unique).
     """
+    conn = connect()
+    c = conn.cursor()
+    player = "INSERT INTO Players (name) VALUES(%s) RETURNING id"
+    standing = "INSERT INTO Standings (player_id,name) VALUES (%s,%s)"
+    c.execute(player, (name,))
+    player_id = c.fetchone()[0]
+    c.execute(standing, (player_id,name,))
+    conn.commit()
+    conn.close()
 
 
 def playerStandings():
@@ -47,6 +85,13 @@ def playerStandings():
         wins: the number of matches the player has won
         matches: the number of matches the player has played
     """
+    conn = connect()
+    c = conn.cursor()
+    standings = "SELECT * FROM Standings ORDER BY score DESC"
+    c.execute(standings)
+    result = c.fetchall()
+    conn.close()
+    return result
 
 
 def reportMatch(winner, loser):
@@ -56,6 +101,26 @@ def reportMatch(winner, loser):
       winner:  the id number of the player who won
       loser:  the id number of the player who lost
     """
+    win_point = 1
+    lose_point = 0
+
+    sql = "INSERT into Matches (winner_id, loser_id) VALUES (%s,%s)"
+
+    conn = connect()
+    c = conn.cursor()
+    c.execute(sql, (winner, loser,))
+
+    win = """UPDATE Standings 
+             SET score = score+%s, matches = matches+1 
+             WHERE player_id = %s"""
+    loss = """UPDATE Standings 
+             SET score = score+%s, matches = matches+1 
+             WHERE player_id = %s"""
+
+    c.execute(win, (win_point, winner,))
+    c.execute(loss, (lose_point, loser,))
+    conn.commit()
+    conn.close()
  
  
 def swissPairings():
@@ -73,5 +138,21 @@ def swissPairings():
         id2: the second player's unique id
         name2: the second player's name
     """
+    sql = """SELECT player_id, name FROM Standings
+                   ORDER BY score DESC"""
 
+    conn = connect()
+    c = conn.cursor()
+    c.execute(sql)
+    top = c.fetchall()
 
+    # Extract all the fields into a list
+    p = []
+    for item in top[::1]:
+        p.extend(item)
+
+    # Group list items into tuples so pairs are group by rank
+    pairs = [tuple(p[i:i+4]) for i in range(0, len(p), 4)]
+    
+    conn.close()
+    return pairs
