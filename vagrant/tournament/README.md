@@ -6,8 +6,8 @@ This is a project for the Udacity Tourament SQL databases
 # Requirement
 
 Download and install the following according to your operating system
-[Git](http://git-scm.com/downloads)
-[Virtual Box](https://www.virtualbox.org/wiki/Downloads)
+[Git](http://git-scm.com/downloads), 
+[Virtual Box](https://www.virtualbox.org/wiki/Downloads), 
 [Vagrant](https://www.vagrantup.com/downloads.html)
 
 fork the root of the project [here](https://github.com/trevordo/fullstack-nanodegree-vm)
@@ -48,7 +48,9 @@ start Postgresql and import database
 ```sh
 
 $ psql
+
 $ \i tournament.sql
+
 $ \q
 
 ```
@@ -64,6 +66,7 @@ Exit virtual machine and log off
 ```sh
 
 $ exit
+
 $ exit
 
 ```

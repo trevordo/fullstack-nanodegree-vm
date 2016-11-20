@@ -145,7 +145,7 @@ def swissPairings():
     """
     # SQL statement to rank players according to score(ie wins)
     sql = """SELECT player_id, name FROM Standings
-                   ORDER BY score DESC"""
+             ORDER BY score DESC"""
 
     conn = connect()
     c = conn.cursor()
