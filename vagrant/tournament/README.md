@@ -6,34 +6,64 @@ This is a project for the Udacity Tourament SQL databases
 # Requirement
 
 Download and install the following according to your operating system
+[Git](http://git-scm.com/downloads)
 [Virtual Box](https://www.virtualbox.org/wiki/Downloads)
 [Vagrant](https://www.vagrantup.com/downloads.html)
 
-Features:
-- login/logout
-- multiuser
-- post blog
-- comment on blog post
-- edit/delete own blog post
-- edit/delete own comments
-- like/dislike blog post
+fork the root of the project [here](https://github.com/trevordo/fullstack-nanodegree-vm)
+clone the project to your local machine
 
-# Usage
+# Setup
 
-To use install Google app engine 
-
-Google deployment
+Run Git Bash
 ```sh
 
-$ cd "/path_of_program/"
-$ gcloud app deploy
-$ gcloud app browse
+$ cd "/path_of_project/fullstack/vagrant/"
 
 ```
-Local deployment
+Setup a virtual machine on VirtualBox
 ```sh
 
-$ cd "/path_of_program/"
-$ dev_appserver.py .
+$ vagrant up
+
+```
+log into virtual machine
+```sh
+
+$ vagrant ssh
+
+```
+# Usage
+
+After logging into virtual machine
+
+change path to tournament
+```sh
+
+$ cd /vagrant/tournament
+
+```
+
+start Postgresql and import database
+```sh
+
+$ psql
+$ \i tournament.sql
+$ \q
+
+```
+
+Run unit test
+```sh
+
+$ python tournament_test.py
+
+```
+
+Exit virtual machine and log off
+```sh
+
+$ exit
+$ exit
 
 ```
