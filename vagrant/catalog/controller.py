@@ -1,9 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from datetime import date
 
-from database_setup import Restaurant, Base, MenuItem
+from database import Department, Base, Seminar
 
-engine = create_engine('sqlite:///restaurantmenu.db')
+engine = create_engine('sqlite:///departmentalseminar.db')
 # Bind the engine to the metadata of the Base class so that the
 # declaratives can be accessed through a DBSession instance
 Base.metadata.bind = engine
@@ -23,48 +24,129 @@ session = DBSession()
 # session.add(newEntry)
 # session.commit()
 
-# Restaurant functions
-def getAllRestaurants():
-    """Function to return a list of all restaurants"""
-    restaurantlist = session.query(Restaurant).all()
-    return restaurantlist
+# Department functions
+def getAllDepartments():
+    """Function to return a list of all Department"""
+    departmentList = session.query(Department).all()
+    return departmentList
 
-def addNewRestaurant(name):
-    """Function to add a new restaurant to the DB
+def getDepartment(d_id):
+    myDepartment = session.query(Department).filter_by(id = d_id).one()
+    return myDepartment
+
+def addNewDepartment(name, description):
+    """Function to add a new Department to the DB
 
     Args:
-      name: the restaurant name (need not be unique).
+      name: the Department name (need not be unique).
     """
-    newRestuarnt = Restaurant(name = name)
-    session.add(newRestuarnt)
+    newDepartment = Department(name = name, description=description)
+    session.add(newDepartment)
     session.commit()
     return
 
-def getRestaurant(r_id):
-    myRestaurant = session.query(Restaurant).filter_by(id =
-                       r_id).one()
-    return myRestaurant
-
-def editRestaurant(r_id,name):
-    """Function to add a new restaurant to the DB
+def editDepartment(d_id,name,description):
+    """Function to add a new Department to the DB
     
     Args:
-      r_id: the id of the restaurant to be queried
-      name: the edited restaurant name (need not be unique).
+      d_id: the id of the Department to be queried
+      name: the edited Department name (need not be unique).
+      description: the description of the Department
     """
-    editRestaurant = session.query(Restaurant).filter_by(id = r_id).one()
-    editRestaurant.name = name
-    session.add(editRestaurant)
+    editDepartment = session.query(Department).filter_by(id = d_id).one()
+    editDepartment.name = name
+    editDepartment.description = description
+    session.add(editDepartment)
     session.commit()
     return
 
-def deleteRestaurant(r_id):
-    myRestaurant = session.query(Restaurant).filter_by(id = r_id).one()
-    session.delete(myRestaurant)
+def deleteDepartment(d_id):
+    """Function to delete a Department from the DB
+    
+    Args:
+      d_id: the id of the Department to be queried
+    """
+    myDepartment = session.query(Department).filter_by(id = d_id).one()
+    session.delete(myDepartment)
     session.commit()
     return
 
 # Menu Items functions
-def getMenuItem(r_id):
-    items = session.query(MenuItem).filter_by(restaurant_id = r_id)
+def getAllSeminarItems(d_id):
+    """Function to retrieve all the seminars from the DB
+    
+    Args:
+      d_id: the id of the Department to be queried in which the relationship 
+            is tied too
+    """
+    items = session.query(Seminar).filter_by(department_id = d_id).all()
     return items
+
+def getSeminarItem(d_id):
+    getSeminar = session.query(Seminar).filter_by(id = d_id).one()
+    return getSeminar
+
+def addNewSeminar(t,s,a,d,b,r,department):
+    """Function to add a new Seminar
+    Args:
+      r: the id of the Department to be queried
+      s: the title of the seminar parameter
+      a: the abstract parameter
+      d: the date parameter
+      b: the building parameter
+      r: the room parameter
+      s_id: the seminar id
+      
+    Use *args in parameter 
+    def test_var_args_call(arg1, arg2, arg3):
+    print "arg1:", arg1
+    print "arg2:", arg2
+    print "arg3:", arg3
+
+    args = ("two", 3)
+    test_var_args_call(1, *args)
+    """
+    newSeminar = Seminar(title=t,
+                         speaker=s,
+                         abstract=a,
+                         date_time=date(d),
+                         building=b,
+                         room=r,
+                         department=department)
+    session.add(newSeminar)
+    session.commit()
+    return
+
+def editSeminar(t,s,a,d,b,r,s_id):
+    """Function to edit a seminar in the DB
+    
+    Args:
+      r: the id of the Department to be queried
+      s: the title of the seminar parameter
+      a: the abstract parameter
+      d: the date parameter
+      b: the building parameter
+      r: the room parameter
+      s_id: the seminar id
+    """
+    editSeminar = session.query(Seminar).filter_by(id = s_id).one()
+    editSeminar.title = t
+    editSeminar.speaker = s
+    editSeminar.abstract = a
+    editSeminar.date_time = d
+    editSeminar.building = b
+    editSeminar.room = r
+    session.add(editSeminar)
+    session.commit()
+    return
+
+def deleteSeminar(s_id):
+    """Function to delete a seminar from the DB
+    
+    Args:
+      s_id: the id of the seminar to be queried
+    """
+    getSeminar = session.query(Seminar).filter_by(id = s_id).one()
+    session.delete(getSeminar)
+    session.commit()
+    return

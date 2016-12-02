@@ -1,6 +1,6 @@
 import controller
 
-from flask import Flask, render_template, request, redirect,url_for
+from flask import Flask, render_template, request, redirect,url_for, flash
 # create instance of class with name of running application as arg
 # anytime we run an application in python a special variable called
 # name gets defined for the application an all of imports it uses
@@ -71,6 +71,7 @@ def deleteMenuItem(restaurant_id, menu_id):
 # if imported dont do if statement but access to rest of the code available
 if __name__ == '__main__':
     # helpful debugger so webserver doesnt need to be restarted
+    app.secret_key = "Super_Secret_Key"
     app.debug = True
     # run function to run local server 
     app.run(host='0.0.0.0', port=5000)
