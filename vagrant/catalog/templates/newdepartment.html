@@ -1,0 +1,18 @@
+<html>
+<body>
+<form action= "{{url_for('newDepartment')}}" method = 'POST'>
+<label>
+<div>Name:</div>
+<input type = 'text' size='30' name = 'name' placeholder = 'ex. Biology'>
+</label>
+<label>
+<div>Description:</div>
+<textarea width='200' height='200' name = 'description' placeholder='ex. The study of life'></textarea>
+</label>
+<div>
+<input type='submit' value='Edit'>
+<div>
+</form>
+<a href="{{url_for('departmentList')}}">Cancel</a>
+</body>
+</html>

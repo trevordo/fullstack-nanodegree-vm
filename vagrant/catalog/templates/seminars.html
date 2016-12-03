@@ -3,7 +3,7 @@
 <body>
 
 <div><a href='/Department'>Back to Departments</a></div>
-<div><a href="{{url_for('newSeminarItem', department_id=department_id)}}"> Add a new seminar</a>
+<div><a href="#"> Add a new seminar</a>
 </div> 
 
 <h1>{{department.name}}</h1>
@@ -23,8 +23,8 @@
 
 <p> {{i.building}},  {{i.room}} </p>
 
-</br><a href="{{url_for('editSeminarItem', department_id=department.id, seminar_id=i.id)}}">Edit</a> 
-</br><a href="{{url_for('deleteSeminarItem', department_id=department.id, seminar_id=i.id)}}">Delete</a>
+</br><a href="#">Edit</a> 
+</br><a href="#">Delete</a>
 
 </div>
 

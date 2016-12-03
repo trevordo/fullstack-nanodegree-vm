@@ -1,0 +1,11 @@
+<html>
+<body>
+<form action= "{{url_for('deleteDepartment', department_id=department.id)}}" method = 'POST'>
+
+<div>
+<input type='submit' value='Delete'>
+</div>
+</form>
+<a href="{{url_for('departmentList')}}">Cancel</a>
+</body>
+</html>

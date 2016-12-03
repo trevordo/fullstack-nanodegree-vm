@@ -35,6 +35,22 @@ class Seminar(Base):
     department = relationship(Department)
     department_id = Column(Integer, ForeignKey('departments.id'))
 
+
+# JSON
+@property
+def serialize(self):
+    # Returns object data in easily serializable format
+    return {
+        'department': self.department,
+        'title': self.title,
+        'speaker': self.description,
+        'abstract': self.abstract,
+        'date': self.date_time,
+        'building': self.building
+        'room': self.room,
+    }
+
+
 ####### insert at end of file #######
 
 engine = create_engine('sqlite:///departmentalseminar.db')
