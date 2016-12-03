@@ -1,0 +1,42 @@
+<html>
+<body>
+<form action="{{url_for('editSeminarItem', department_id=department.id, seminar_id=seminar.id)}}" method = 'POST'>
+
+<label>
+<div>Title:</div>
+<textarea width='200' height='200' name = 'title'>{{seminar.title}}</textarea>
+</label>
+
+<label>
+<div>Speaker:</div>
+<input type = 'text' size='30' name = 'speaker' value = '{{seminar.speaker}}'>
+</label>
+
+<label>
+<div>Abstract:</div>
+<textarea width='200' height='200' name = 'abstract'>{{seminar.abstract}}</textarea>
+</label>
+
+<label>
+<div>date:</div>
+<input type = 'text' size='30' name = 'date_time' value = '{{seminar.date_time}}'>
+</label>
+
+<label>
+<div>building:</div>
+<input type = 'text' size='30' name = 'building' value = '{{seminar.building}}'>
+</label>
+
+<label>
+<div>room:</div>
+<input type = 'text' size='30' name = 'room' value = '{{seminar.room}}'>
+</label>
+
+<div>
+<input type='submit' value='Edit'>
+<div>
+
+</form>
+<a href="{{url_for('departmentSeminars', department_id=department.id)}}">Cancel</a>
+</body>
+</html>

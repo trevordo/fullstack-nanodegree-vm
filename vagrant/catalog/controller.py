@@ -82,8 +82,8 @@ def getAllSeminarItems(d_id):
     items = session.query(Seminar).filter_by(department_id = d_id).all()
     return items
 
-def getSeminarItem(d_id):
-    getSeminar = session.query(Seminar).filter_by(id = d_id).one()
+def getSeminarItem(s_id):
+    getSeminar = session.query(Seminar).filter_by(id = s_id).one()
     return getSeminar
 
 def addNewSeminar(t,s,a,d,b,r,department):
@@ -109,10 +109,11 @@ def addNewSeminar(t,s,a,d,b,r,department):
     newSeminar = Seminar(title=t,
                          speaker=s,
                          abstract=a,
-                         date_time=date(d),
+                         date_time=d,
                          building=b,
                          room=r,
                          department=department)
+    print newSeminar
     session.add(newSeminar)
     session.commit()
     return
