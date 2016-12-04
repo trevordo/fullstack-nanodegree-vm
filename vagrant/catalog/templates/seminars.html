@@ -1,10 +1,9 @@
-<html>
+{% extends "base.html" %}
+{% block content %}
 
-<body>
-
-<div><a href='/Department'>Back to Departments</a></div>
-<div><a href="{{url_for('newSeminarItem', department_id=department.id)}}"> Add a new seminar</a>
-</div> 
+<div class="row right">
+    <a href="{{url_for('routes.newSeminarItem', department_id=department.id)}}" id="AddSeminar-button" class="btn-large waves-effect waves-light orange">Add a new Seminar</a>
+</div>
 
 <h1>{{department.name}}</h1>
 
@@ -32,13 +31,11 @@
 
 <p> {{i.building}},  {{i.room}} </p>
 
-</br><a href="{{url_for('editSeminarItem', department_id=department.id, seminar_id=i.id)}}">Edit</a> 
-</br><a href="{{url_for('deleteSeminarItem', department_id=department.id, seminar_id=i.id)}}">Delete</a>
+</br><a href="{{url_for('routes.editSeminarItem', department_id=department.id, seminar_id=i.id)}}">Edit</a> 
+</br><a href="{{url_for('routes.deleteSeminarItem', department_id=department.id, seminar_id=i.id)}}">Delete</a>
 
 </div>
 
 
 {% endfor %}
-</body>
-
-</html>
+{% endblock %}

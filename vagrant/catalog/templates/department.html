@@ -1,11 +1,12 @@
-<html>
+{% extends "base.html" %}
+{% block content %}
 
-<body>
 
-<div><a href="{{url_for('newDepartment')}}">Add a new Department</a>
-</div> 
+<div class="row right">
+    <a href="{{url_for('routes.newDepartment')}}" id="AddDepartment-button" class="btn-large waves-effect waves-light orange">Add a new Department</a>
+</div>
 
-<h1>departments</h1>
+<h1 class="header orange-text">Departments</h1>
 
 {% with messages = get_flashed_messages() %}
 {% if messages %}
@@ -20,19 +21,17 @@
 {% for d in departments %}
 
 <div>
-<a href="{{url_for('departmentSeminars', department_id=d.id)}}">
-<h2>{{d.name}}</h2>
+<a href="{{url_for('routes.departmentSeminars', department_id=d.id)}}">
+<h3>{{d.name}}</h3>
 </a>
 <p>{{d.description}}</p>
-</br><a href="{{url_for('editDepartment', department_id=d.id)}}">Edit</a>
-</br><a href="{{url_for('deleteDepartment', department_id=d.id)}}">Delete</a>
+</br><a href="{{url_for('routes.editDepartment', department_id=d.id)}}">Edit</a>
+</br><a href="{{url_for('routes.deleteDepartment', department_id=d.id)}}">Delete</a>
 
 </div>
 
 
 {% endfor %}
-</body>
-
-</html>
+{% endblock %}
 
 

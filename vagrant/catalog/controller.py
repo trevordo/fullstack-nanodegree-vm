@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from datetime import date
 
-from database import Department, Base, Seminar
+from database import Department, Base, Seminar, User
 
 engine = create_engine('sqlite:///departmentalseminar.db')
 # Bind the engine to the metadata of the Base class so that the
@@ -151,3 +151,24 @@ def deleteSeminar(s_id):
     session.delete(getSeminar)
     session.commit()
     return
+
+def createUser(login_session):
+    newUser = User(name=login_session['username'], email=login_session[
+                   'email'], picture=login_session['picture'])
+    session.add(newUser)
+    session.commit()
+    user = session.query(User).filter_by(email=login_session['email']).one()
+    return user
+
+
+def getUserInfo(user_id):
+    user = session.query(User).filter_by(id=user_id).one()
+    return user
+
+
+def getUserID(email):
+    try:
+        user = session.query(User).filter_by(email=email).one()
+        return user
+    except:
+        return None

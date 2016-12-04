@@ -20,14 +20,11 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 # Create dummy user
-User1 = User(name="Robo Barista", email="tinnyTim@udacity.com")
+User1 = User(name="Robo Barista", 
+             email="tinnyTim@udacity.com",
+             picture="https://pbs.twimg.com/profile_images/2671170543/18debd694829ed78203a5a36dd364160_400x400.png")
 session.add(User1)
 session.commit()
-
-User2 = User(name="Trevor Do", email="trevordo@gmail.com")
-session.add(User2)
-session.commit()
-
 
 # Departments and Seminars
 department1 = Department(user_id=1,
@@ -55,7 +52,7 @@ session.add(seminar1)
 session.commit()
 
 
-seminar2 = Seminar(user_id=2,
+seminar2 = Seminar(user_id=1,
                    title="How to give a scientific talk", 
                    speaker="Dr. John Rubinstein",
                    abstract="Practical seminar",
@@ -94,7 +91,7 @@ session.add(seminar1)
 session.commit()
 
 # Menu for Panda Garden
-department1 = Department(user_id=2,
+department1 = Department(user_id=1,
                          name="Pathology", 
                          description="""Pathology (from the Greek roots of 
                          pathos, meaning "experience" or "suffering", 
@@ -106,7 +103,7 @@ session.add(department1)
 session.commit()
 
 
-seminar1 = Seminar(user_id=2,
+seminar1 = Seminar(user_id=1,
                    title="The Big Data Rush: An Introduction to Data Science", 
                    speaker="Geraghty, Benjamin",
                    abstract="The next big thing",
@@ -118,7 +115,7 @@ seminar1 = Seminar(user_id=2,
 session.add(seminar1)
 session.commit()
 
-seminar2 = Seminar(user_id=2,
+seminar2 = Seminar(user_id=1,
                    title="Monoclonal antibodies specifically targeting amyloidogenic forms of transthyretin (TTR) with potential to treat TTR-related cardiomyopathy and polyneuropathy", 
                    speaker="Galant, Natalie",
                    abstract="Targeting heart and neuro diseases with mabs",
@@ -130,7 +127,7 @@ seminar2 = Seminar(user_id=2,
 session.add(seminar2)
 session.commit()
 
-seminar3 = Seminar(user_id=2,
+seminar3 = Seminar(user_id=1,
                    title="Identification of Prognostic Gene Signatures in Hepatocellular Carcinoma", 
                    speaker="Bhat, Mamatha",
                    abstract="Genetics and liver tumors",

@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html>
 <head>
 
   <!--LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
@@ -17,7 +15,7 @@
 <body>  
 
 
-<!-- GOOGLE PLUS SIGN IN BUTTON-->
+<!-- GOOGLE PLUS SIGN IN-->
 
           
           <div id="signInButton">
@@ -31,7 +29,8 @@
             data-approvalprompt="force">
           </span>
         </div>
-        <div id="result"></div>
+
+<div id="result"></div>
 
 <script>
 function signInCallback(authResult) {
@@ -62,7 +61,6 @@ function signInCallback(authResult) {
       
   }); } }
 </script>
-<!--END GOOGLE PLUS SIGN IN BUTTON -->
 
 <!--END GOOGLE PLUS SIGN IN -->
 
@@ -70,11 +68,11 @@ function signInCallback(authResult) {
 <script>
   window.fbAsyncInit = function() {
   FB.init({
-    appId      : '846524132078825',
+    appId      : '1783486698605469',
     cookie     : true,  // enable cookies to allow the server to access 
                         // the session
     xfbml      : true,  // parse social plugins on this page
-    version    : 'v2.2' // use version 2.2
+    version    : 'v2.8' // use version 2.8 modified from 2.2
   });
   };
   // Load the SDK asynchronously
@@ -130,6 +128,6 @@ function signInCallback(authResult) {
         </button>
 <!--END FACEBOOK SIGN IN -->
 
-</body>
+  </body>
 
-</html>
+  </html>
