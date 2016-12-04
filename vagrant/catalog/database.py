@@ -15,12 +15,32 @@ from sqlalchemy import create_engine
 # help setup class code lets sqlalch know its special classes
 Base = declarative_base()
 
+class User(Base):
+    __tablename__ = 'user'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False)
+    picture_ip = Column(String)
+
 class Department(Base):
     __tablename__ = 'departments'
 
     id = Column(Integer, primary_key = True)
     name = Column(String(80), nullable = False)
     description = Column(String)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
+
+    # JSON
+    @property
+    def serialize(self):
+        # Returns object data in easily serializable format
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+        }
 
 class Seminar(Base):
     __tablename__ = 'seminars'
@@ -34,6 +54,8 @@ class Seminar(Base):
     room = Column(String(25))
     department = relationship(Department)
     department_id = Column(Integer, ForeignKey('departments.id'))
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
 
     # JSON
     @property

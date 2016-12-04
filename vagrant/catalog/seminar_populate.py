@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from datetime import date
 
-from database import Department, Base, Seminar
+from database import Department, Base, Seminar, User
 
 engine = create_engine('sqlite:///departmentalseminar.db')
 # Bind the engine to the metadata of the Base class so that the
@@ -19,9 +19,19 @@ DBSession = sessionmaker(bind=engine)
 # session.rollback()
 session = DBSession()
 
+# Create dummy user
+User1 = User(name="Robo Barista", email="tinnyTim@udacity.com")
+session.add(User1)
+session.commit()
 
-# Menu for UrbanBurger
-department1 = Department(name="Medical Biophysics", 
+User2 = User(name="Trevor Do", email="trevordo@gmail.com")
+session.add(User2)
+session.commit()
+
+
+# Departments and Seminars
+department1 = Department(user_id=1,
+                         name="Medical Biophysics", 
                          description="""Medical physics (also called biomedical 
                          physics, medical biophysics or applied physics in 
                          medicine) is, generally speaking, the application of 
@@ -32,7 +42,8 @@ department1 = Department(name="Medical Biophysics",
 session.add(department1)
 session.commit()
 
-seminar1 = Seminar(title="Seminar course basics: the what and the how", 
+seminar1 = Seminar(user_id=1,
+                   title="Seminar course basics: the what and the how", 
                    speaker="Dr. Alex Vitkin",
                    abstract="Introduction seminar",
                    date_time=date(2016, 9, 28),
@@ -44,7 +55,8 @@ session.add(seminar1)
 session.commit()
 
 
-seminar2 = Seminar(title="How to give a scientific talk", 
+seminar2 = Seminar(user_id=2,
+                   title="How to give a scientific talk", 
                    speaker="Dr. John Rubinstein",
                    abstract="Practical seminar",
                    date_time=date(2016, 9, 28),
@@ -55,8 +67,9 @@ seminar2 = Seminar(title="How to give a scientific talk",
 session.add(seminar2)
 session.commit()
 
-# Menu for Super Stir Fry
-department1 = Department(name="Medical Oncology", 
+# Second department and seminar
+department1 = Department(user_id=1,
+                         name="Medical Oncology", 
                          description="""Oncology is a branch of medicine that 
                          deals with the prevention, diagnosis and treatment of 
                          cancer. A medical professional who practices oncology 
@@ -68,7 +81,8 @@ session.add(department1)
 session.commit()
 
 
-seminar1 = Seminar(title="Sollazzo, Peter", 
+seminar1 = Seminar(user_id=1,
+                   title="Sollazzo, Peter", 
                    speaker="Targeting differentiation pathways in Neuroblastoma",
                    abstract="Neuroblastoma (NB) is a type of cancer that forms in certain types of nerve tissue",
                    date_time=date(2016, 10, 11),
@@ -80,7 +94,8 @@ session.add(seminar1)
 session.commit()
 
 # Menu for Panda Garden
-department1 = Department(name="Pathology", 
+department1 = Department(user_id=2,
+                         name="Pathology", 
                          description="""Pathology (from the Greek roots of 
                          pathos, meaning "experience" or "suffering", 
                          and -logia, "study of") is a significant 
@@ -91,7 +106,8 @@ session.add(department1)
 session.commit()
 
 
-seminar1 = Seminar(title="The Big Data Rush: An Introduction to Data Science", 
+seminar1 = Seminar(user_id=2,
+                   title="The Big Data Rush: An Introduction to Data Science", 
                    speaker="Geraghty, Benjamin",
                    abstract="The next big thing",
                    date_time=date(2016, 10, 18),
@@ -102,7 +118,8 @@ seminar1 = Seminar(title="The Big Data Rush: An Introduction to Data Science",
 session.add(seminar1)
 session.commit()
 
-seminar2 = Seminar(title="Monoclonal antibodies specifically targeting amyloidogenic forms of transthyretin (TTR) with potential to treat TTR-related cardiomyopathy and polyneuropathy", 
+seminar2 = Seminar(user_id=2,
+                   title="Monoclonal antibodies specifically targeting amyloidogenic forms of transthyretin (TTR) with potential to treat TTR-related cardiomyopathy and polyneuropathy", 
                    speaker="Galant, Natalie",
                    abstract="Targeting heart and neuro diseases with mabs",
                    date_time=date(2016, 10, 25),
@@ -113,7 +130,8 @@ seminar2 = Seminar(title="Monoclonal antibodies specifically targeting amyloidog
 session.add(seminar2)
 session.commit()
 
-seminar3 = Seminar(title="Identification of Prognostic Gene Signatures in Hepatocellular Carcinoma", 
+seminar3 = Seminar(user_id=2,
+                   title="Identification of Prognostic Gene Signatures in Hepatocellular Carcinoma", 
                    speaker="Bhat, Mamatha",
                    abstract="Genetics and liver tumors",
                    date_time=date(2016, 10, 26),
