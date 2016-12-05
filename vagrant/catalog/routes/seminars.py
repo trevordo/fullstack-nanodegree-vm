@@ -7,6 +7,7 @@ from flask import Flask, render_template, request, redirect, url_for, \
                   flash, jsonify, make_response
 
 from . import routes
+from loginprovider import *
 
 @routes.route('/Deparment/<int:department_id>/')
 def departmentSeminars(department_id):
@@ -17,6 +18,48 @@ def departmentSeminars(department_id):
     return render_template('seminars.html', 
                             department=getdepartment, 
                             items=listOfSeminars)
+
+@routes.route('/Deparment/<int:department_id>/new/', methods=['GET','POST'])
+def newSeminarItem(department_id):
+    # Check to see if user is logged in to get to page
+    if 'username' not in login_session:
+        return redirect('/login')
+    if request.method == 'POST':
+        if request.form['title'] and request.form['date_time']:
+            dept = controller.getDepartment(department_id)
+
+            # Form fields
+            addTitle = request.form['title']
+            addSpeaker = request.form['speaker']
+            addDate = datetime.strptime(request.form['date_time'], '%d %B, %Y').date()
+            addAbstract = request.form['abstract']
+            addBuilding = request.form['building']
+            addRoom = request.form['room']
+            addDepartment = dept
+            
+            args = (addTitle, 
+                    addSpeaker, 
+                    addAbstract, 
+                    addDate, 
+                    addBuilding, 
+                    addRoom,
+                    addDepartment)
+
+            # Add department to controller
+            controller.addNewSeminar(*args)
+
+            # Get department and seminar objects
+            listOfSeminars = controller.getAllSeminarItems(department_id)
+            flash("Seminar Added Successfully!")
+        return redirect(url_for('routes.departmentSeminars', 
+                                department_id=dept.id))
+    else:
+        # From controller get a list of all items
+        getdepartment = controller.getDepartment(department_id)
+        listOfSeminars = controller.getAllSeminarItems(department_id)
+        # render template
+        return render_template('newseminar.html', 
+                                department=getdepartment)
 
 # Task 2: Create route for editSeminarItem function here
 
@@ -31,7 +74,7 @@ def editSeminarItem(department_id, seminar_id):
         # Form fields
         addTitle = request.form['title']
         addSpeaker = request.form['speaker']
-        addDate = datetime.strptime(request.form['date_time'], '%d, %B %Y').date()
+        addDate = datetime.strptime(request.form['date_time'], '%d %B, %Y').date()
         addAbstract = request.form['abstract']
         addBuilding = request.form['building']
         addRoom = request.form['room']
@@ -49,7 +92,7 @@ def editSeminarItem(department_id, seminar_id):
         controller.editSeminar(*args)
         flash("Seminar Edited Successfully!")
         getdepartment = controller.getDepartment(department_id)
-        return redirect(url_for('departmentSeminars', 
+        return redirect(url_for('routes.departmentSeminars', 
                                 department_id=getdepartment.id))
     else:
         getdepartment = controller.getDepartment(department_id)
@@ -68,17 +111,17 @@ def deleteSeminarItem(department_id, seminar_id):
     # Check to see if user is logged in to get to page
     if 'username' not in login_session:
         return redirect('/login')
-    if getSeminarUser.user_id != login_session['user_id']:
-        return """<script>function myFunction() { alert('You are not authorized
-                  to delete this Seminar. Please create your own seminar in 
-                  order to delete.');}</script><body onload='myFunction()'>
-               """
+    #if getSeminarUser.user_id != login_session['user_id']:
+    #    return """<script>function myFunction() { alert('You are not authorized
+    #              to delete this Seminar. Please create your own seminar in 
+    #              order to delete.');}</script><body onload='myFunction()'>
+    #          """
     if request.method =='POST':
         # Delete department to controller
         controller.deleteSeminar(seminar_id)
         flash("Seminar Deleted Successfully!")
         getdepartment = controller.getDepartment(department_id)
-        return redirect(url_for('departmentSeminars', 
+        return redirect(url_for('routes.departmentSeminars', 
                                 department_id=getdepartment.id))
     else:
         getdepartment = controller.getDepartment(department_id)

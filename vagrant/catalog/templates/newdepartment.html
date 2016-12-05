@@ -1,18 +1,32 @@
-<html>
-<body>
-<form action= "{{url_for('newDepartment')}}" method = 'POST'>
-<label>
-<div>Name:</div>
-<input type = 'text' size='30' name = 'name' placeholder = 'ex. Biology'>
-</label>
-<label>
-<div>Description:</div>
-<textarea width='200' height='200' name = 'description' placeholder='ex. The study of life'></textarea>
-</label>
+{% extends "base.html" %}
+{% block content %}
+
+<section id="AddNewDepartment">
+<h3 class="header orange-text">Add a new Department</h3>
+
+<form action= "{{url_for('routes.newDepartment')}}" method = 'POST'>
+<div class="row">
+    <div class="input-field col s6">
+      <input name='name' id="name" type="text" class="validate" placeholder ='ex. Biology'>
+      <label class="active" for="name">Department Name:</label>
+    </div>
+</div>
+<div class="row">
+<div class="input-field col s12">
+<textarea name='description' id="description" class="materialize-textarea">
+</textarea>
+<label for="description">Description:</label>
+</div>
+</div>
+
 <div>
-<input type='submit' value='Add'>
-<div>
+<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+    <i class="material-icons right">send</i>
+</button>
+<a href="{{url_for('routes.departmentList')}}" class="waves-effect waves-light btn">Cancel</a>
+</div>
 </form>
-<a href="{{url_for('departmentList')}}">Cancel</a>
-</body>
-</html>
+
+
+</section>
+{% endblock %}

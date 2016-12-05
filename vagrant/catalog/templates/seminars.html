@@ -17,25 +17,26 @@
 {% endif %}
 {% endwith %}
 
+
+<div class="row">
 {% for i in items %}
 
-<div>
-
-<p>{{i.title}}</p>
-
-<p>{{i.abstract}}</p>
-
-<p> {{i.speaker}} </p>
-
-<p> {{i.date_time.strftime("%d, %B %Y")}} </p>
-
-<p> {{i.building}},  {{i.room}} </p>
-
-</br><a href="{{url_for('routes.editSeminarItem', department_id=department.id, seminar_id=i.id)}}">Edit</a> 
-</br><a href="{{url_for('routes.deleteSeminarItem', department_id=department.id, seminar_id=i.id)}}">Delete</a>
-
-</div>
-
+        <div class="col s12 m12">
+          <div class="card green lighten-2">
+            <div class="card-content">
+              <span class="card-title">{{i.title}}</span>
+              <p>{{i.abstract}}</p>
+              <p>{{i.speaker}} </p>
+              <p>{{i.date_time.strftime("%d %B, %Y")}} </p>
+              <p>{{i.building}},  {{i.room}} </p>
+            </div>
+            <div class="card-action blue">
+              <a href="{{url_for('routes.editSeminarItem', department_id=department.id, seminar_id=i.id)}}">Edit</a>
+              <a href="{{url_for('routes.deleteSeminarItem', department_id=department.id, seminar_id=i.id)}}">Delete</a>
+            </div>
+          </div>
+        </div>
 
 {% endfor %}
+</div>
 {% endblock %}

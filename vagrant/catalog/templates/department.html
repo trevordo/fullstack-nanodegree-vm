@@ -18,20 +18,30 @@
 {% endif %}
 {% endwith %}
 
+<div class="row">
 {% for d in departments %}
 
-<div>
-<a href="{{url_for('routes.departmentSeminars', department_id=d.id)}}">
-<h3>{{d.name}}</h3>
-</a>
-<p>{{d.description}}</p>
-</br><a href="{{url_for('routes.editDepartment', department_id=d.id)}}">Edit</a>
-</br><a href="{{url_for('routes.deleteDepartment', department_id=d.id)}}">Delete</a>
 
-</div>
 
+
+        <div class="col s12 m6">
+          <div class="card blue-grey lighten-1">
+            <div class="card-content white-text">
+              <a href="{{url_for('routes.departmentSeminars', department_id=d.id)}}">  
+              <span class="card-title white-text">{{d.name}}</span>
+              </a>
+              <p>{{d.description}}</p>
+            </div>
+            <div class="card-action">
+              <a href="{{url_for('routes.editDepartment', department_id=d.id)}}">Edit</a>
+              <a href="{{url_for('routes.deleteDepartment', department_id=d.id)}}">Delete</a>
+            </div>
+          </div>
+        </div>
 
 {% endfor %}
+</div>
+
 {% endblock %}
 
 
