@@ -1,5 +1,8 @@
 import sys
 
+# used for JSON serialization of date and time
+import json
+
 # for mapper code
 from sqlalchemy import Column, ForeignKey, Integer, String, Date
 
@@ -65,11 +68,10 @@ class Seminar(Base):
             'title': self.title,
             'speaker': self.speaker,
             'abstract': self.abstract,
-            'date': self.date_time,
+            'date': json.dumps(self.date_time.isoformat()),
             'building': self.building,
             'room': self.room,
         }
-
 
 ####### insert at end of file #######
 

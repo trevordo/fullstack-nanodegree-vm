@@ -21,9 +21,16 @@ def departmentSeminars(department_id):
 
 @routes.route('/Deparment/<int:department_id>/new/', methods=['GET','POST'])
 def newSeminarItem(department_id):
+    getDepartmentUser = controller.getDepartmentUser(department_id)
+    currentUser = login_session['user_id']
     # Check to see if user is logged in to get to page
     if 'username' not in login_session:
         return redirect('/login')
+    if getDepartmentUser != currentUser.id:
+        flash("You are not authorized to add a Seminar. Please create your own Department to add a Seminar!")
+        getdepartment = controller.getDepartment(department_id)
+        return redirect(url_for('routes.departmentSeminars', 
+                                department_id=getdepartment.id))
     if request.method == 'POST':
         if request.form['title'] and request.form['date_time']:
             dept = controller.getDepartment(department_id)
@@ -35,6 +42,7 @@ def newSeminarItem(department_id):
             addAbstract = request.form['abstract']
             addBuilding = request.form['building']
             addRoom = request.form['room']
+            addUser = currentUser.id
             addDepartment = dept
             
             args = (addTitle, 
@@ -43,6 +51,7 @@ def newSeminarItem(department_id):
                     addDate, 
                     addBuilding, 
                     addRoom,
+                    addUser,
                     addDepartment)
 
             # Add department to controller
@@ -65,9 +74,16 @@ def newSeminarItem(department_id):
 
 @routes.route('/Deparment/<int:department_id>/<int:seminar_id>/edit/', methods=['GET','POST'])
 def editSeminarItem(department_id, seminar_id):
+    getSeminarUser = controller.getSeminarItemUser(seminar_id)
+    currentUser = login_session['user_id']
     # Check to see if user is logged in to get to page
     if 'username' not in login_session:
         return redirect('/login')
+    if getSeminarUser != currentUser.id:
+        flash("You are not authorized to Edit this Seminar. Please create your own seminar in order to Edit!")
+        getdepartment = controller.getDepartment(department_id)
+        return redirect(url_for('routes.departmentSeminars', 
+                                department_id=getdepartment.id))
     if request.method =='POST':
               
         dept = controller.getDepartment(department_id)
@@ -107,15 +123,16 @@ def editSeminarItem(department_id, seminar_id):
 @routes.route('/Deparment/<int:department_id>/<int:seminar_id>/delete/', 
             methods=['GET','POST'])
 def deleteSeminarItem(department_id, seminar_id):
-    getSeminarUser = ""
+    getSeminarUser = controller.getSeminarItemUser(seminar_id)
+    currentUser = login_session['user_id']
     # Check to see if user is logged in to get to page
     if 'username' not in login_session:
         return redirect('/login')
-    #if getSeminarUser.user_id != login_session['user_id']:
-    #    return """<script>function myFunction() { alert('You are not authorized
-    #              to delete this Seminar. Please create your own seminar in 
-    #              order to delete.');}</script><body onload='myFunction()'>
-    #          """
+    if getSeminarUser != currentUser.id:
+        flash("You are not authorized to delete this Seminar. Please create your own seminar in order to delete!")
+        getdepartment = controller.getDepartment(department_id)
+        return redirect(url_for('routes.departmentSeminars', 
+                                department_id=getdepartment.id))
     if request.method =='POST':
         # Delete department to controller
         controller.deleteSeminar(seminar_id)

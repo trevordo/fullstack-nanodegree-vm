@@ -2,16 +2,19 @@
 {% block content %}
 
 <div class="row right">
-    <a href="{{url_for('routes.newSeminarItem', department_id=department.id)}}" id="AddSeminar-button" class="btn-large waves-effect waves-light orange">Add a new Seminar</a>
+    <a href="{{url_for('routes.newSeminarItem', department_id=department.id)}}" 
+       id="AddSeminar-button" 
+       class="btn-large waves-effect waves-light orange">
+       Add a new Seminar</a>
 </div>
 
-<h1>{{department.name}}</h1>
+<h1 class="blue-text">{{department.name}}</h1>
 
 {% with messages = get_flashed_messages() %}
 {% if messages %}
 <ul>
 {% for message in messages %}
-<li><strong>{{message}}</strong></li>
+<li class="red-text"><strong>{{message}}</strong></li>
 {% endfor %}
 </ul>
 {% endif %}
@@ -30,10 +33,12 @@
               <p>{{i.date_time.strftime("%d %B, %Y")}} </p>
               <p>{{i.building}},  {{i.room}} </p>
             </div>
-            <div class="card-action blue">
+            {% if 'username' in session %}
+            <div class="card-action">
               <a href="{{url_for('routes.editSeminarItem', department_id=department.id, seminar_id=i.id)}}">Edit</a>
               <a href="{{url_for('routes.deleteSeminarItem', department_id=department.id, seminar_id=i.id)}}">Delete</a>
             </div>
+            {% endif %}
           </div>
         </div>
 

@@ -34,13 +34,19 @@ def getDepartment(d_id):
     myDepartment = session.query(Department).filter_by(id = d_id).one()
     return myDepartment
 
-def addNewDepartment(name, description):
+def getDepartmentUser(d_id):
+    myDepartmentUser = session.query(Department).filter_by(id = d_id).one()
+    return myDepartmentUser.user_id
+
+def addNewDepartment(name, description, user_id):
     """Function to add a new Department to the DB
 
     Args:
       name: the Department name (need not be unique).
     """
-    newDepartment = Department(name = name, description=description)
+    newDepartment = Department(name = name, 
+                               description=description, 
+                               user_id=user_id)
     session.add(newDepartment)
     session.commit()
     return
@@ -86,7 +92,11 @@ def getSeminarItem(s_id):
     getSeminar = session.query(Seminar).filter_by(id = s_id).one()
     return getSeminar
 
-def addNewSeminar(t,s,a,d,b,r,department):
+def getSeminarItemUser(s_id):
+    getSeminar = session.query(Seminar).filter_by(id = s_id).one()
+    return getSeminar.user_id
+
+def addNewSeminar(t,s,a,d,b,r,u,department):
     """Function to add a new Seminar
     Args:
       r: the id of the Department to be queried
@@ -112,6 +122,7 @@ def addNewSeminar(t,s,a,d,b,r,department):
                          date_time=d,
                          building=b,
                          room=r,
+                         user_id=u,
                          department=department)
     print newSeminar
     session.add(newSeminar)

@@ -3,7 +3,10 @@
 
 
 <div class="row right">
-    <a href="{{url_for('routes.newDepartment')}}" id="AddDepartment-button" class="btn-large waves-effect waves-light orange">Add a new Department</a>
+    {% if 'username' in session %}
+      <a href="{{url_for('routes.newDepartment')}}" id="AddDepartment-button" class="btn-large waves-effect waves-light orange">Add a new Department</a>
+    {% endif %}
+    
 </div>
 
 <h1 class="header orange-text">Departments</h1>
@@ -12,7 +15,7 @@
 {% if messages %}
 <ul>
 {% for message in messages %}
-<li><strong>{{message}}</strong></li>
+<li class="red-text"><strong>{{message}}</strong></li>
 {% endfor %}
 </ul>
 {% endif %}
@@ -21,21 +24,20 @@
 <div class="row">
 {% for d in departments %}
 
-
-
-
         <div class="col s12 m6">
-          <div class="card blue-grey lighten-1">
+          <div class="card blue-grey lighten-1 hoverable">
             <div class="card-content white-text">
               <a href="{{url_for('routes.departmentSeminars', department_id=d.id)}}">  
               <span class="card-title white-text">{{d.name}}</span>
               </a>
               <p>{{d.description}}</p>
             </div>
+            {% if 'username' in session %}
             <div class="card-action">
               <a href="{{url_for('routes.editDepartment', department_id=d.id)}}">Edit</a>
               <a href="{{url_for('routes.deleteDepartment', department_id=d.id)}}">Delete</a>
             </div>
+            {% endif %}
           </div>
         </div>
 

@@ -1,37 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Login</title>
+  <!-- CORE CSS-->
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
 
   <!--LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
-   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
-  </script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script src="//apis.google.com/js/platform.js?onload=start"> </script>
+  <!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
 
-<script src="//apis.google.com/js/platform.js?onload=start"> </script>
-
-<!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
-
+<style>
+html,
+body {
+    height: 100%;
+}
+html {
+    display: table;
+    margin: auto;
+}
+body {
+    display: table-cell;
+    vertical-align: middle;
+}
+.margin {
+  margin: 0 !important;
+}
+</style>
 
 </head>
+<body class="orange">
 
 
-<body>  
-
-
-<!-- GOOGLE PLUS SIGN IN-->
-
-          
-          <div id="signInButton">
-          <span class="g-signin"
-            data-scope="openid email"
-            data-clientid="734555328035-0tlnkgcuhgq2fc2tv34duiocurdgigja.apps.googleusercontent.com"
-            data-redirecturi="postmessage"
-            data-accesstype="offline"
-            data-cookiepolicy="single_host_origin"
-            data-callback="signInCallback"
-            data-approvalprompt="force">
-          </span>
+  <div id="login-page" class="row">
+    <div class="col s12 z-depth-6 card-panel">
+      <form class="login-form">
+        <div class="row">
+          <div class="input-field col s12 center">
+            <h3 class="center login-form-text">Seminars R'us</h3>
+            <p class="center login-form-text">Please Login to Proceed</p>
+          </div>
+        </div>
+        <div class="row center" id="result"></div>
+        <div class="row">
+          <div class="input-field col s6 m6 l6">
+            <div id="signInButton">
+                <span class="g-signin g-botton"
+                      data-scope="openid email"
+                      data-clientid="734555328035-0tlnkgcuhgq2fc2tv34duiocurdgigja.apps.googleusercontent.com"
+                      data-redirecturi="postmessage"
+                      data-accesstype="offline"
+                      data-cookiepolicy="single_host_origin"
+                      data-callback="signInCallback"
+                      data-approvalprompt="force">
+                </span>
+            </div>
+          </div>
+          <div class="input-field col s6 m6 l6">
+              <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer();" style="top: 5px; right:15px">
+              <a href='javascript:sendTokenToServer()'>Login with Facebook</a>
+              </fb:login-button>
+          </div>          
         </div>
 
-<div id="result"></div>
+      </form>
+    </div>
+  </div>  
 
+
+<section="buttons">
+<div class="row">
+
+</div>
+</section>
+
+
+<!-- GOOGLE PLUS SIGN IN--> 
 <script>
 function signInCallback(authResult) {
   if (authResult['code']) {
@@ -61,9 +109,7 @@ function signInCallback(authResult) {
       
   }); } }
 </script>
-
 <!--END GOOGLE PLUS SIGN IN -->
-
 <!--FACEBOOK SIGN IN -->
 <script>
   window.fbAsyncInit = function() {
@@ -114,20 +160,8 @@ function signInCallback(authResult) {
     });
   }
 </script>
-
-
-<button>
-         
-
-          <fb:login-button scope="public_profile,email" onlogin="sendTokenToServer();">
-<a href='javascript:sendTokenToServer()'>Login with Facebook</a>
-
-</fb:login-button>
-
-
-        </button>
 <!--END FACEBOOK SIGN IN -->
 
-  </body>
+</body>
 
-  </html>
+</html>
