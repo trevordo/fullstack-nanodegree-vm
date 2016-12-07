@@ -47,6 +47,7 @@ $ python seminar_populate.py
 
 Run webserver
 $ python finalproject.py
+```
 
 Exit virtual machine and log off
 ```sh
